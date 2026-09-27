@@ -26,6 +26,11 @@ button:active{transform:scale(.97)}
 button:disabled{opacity:.4;cursor:not-allowed;transform:none}
 button.sq2{background:none;color:var(--cy);border:1px solid var(--cy);box-shadow:none;padding:7px 12px;font-size:10px}
 .hero{display:flex;align-items:center;gap:12px;margin-bottom:8px;text-align:left}
+.hub{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.hub button{font-size:10.5px;padding:12px 5px;line-height:1.3}
+.hub .center{display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px}
+.hub .center .avatar{width:60px;height:60px}
+.hub .center b{font-size:13px}
 .hero-t{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
 .hero-t b{font-size:15px;letter-spacing:.06em}
 .hero-t span{font-size:11px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px}
@@ -87,7 +92,7 @@ footer{margin-top:18px;text-align:center;font-size:11px;letter-spacing:.14em;col
   </div>
   <div class="pad">
     <div id="js"><div id="kn"></div></div>
-    <div class="acts"><button class="rb sm" id="bd">DUCK</button><button class="rb" id="bj">JUMP</button></div>
+    <div class="acts"><button class="rb sm" id="bd">DUCK</button><button class="rb sm" id="bf">FIRE</button><button class="rb" id="bj">JUMP</button></div>
   </div>
 
   <div id="menu">
@@ -98,16 +103,15 @@ footer{margin-top:18px;text-align:center;font-size:11px;letter-spacing:.14em;col
       <p class="hint" id="ne"></p>
     </section>
     <section id="sh">
-      <div class="hero"><img id="hav" class="avatar" alt=""><div class="hero-t"><b id="hn"></b><span id="hbio"></span></div><span id="cn"></span></div>
-      <div class="badge" id="hb">HOST MODE · every level, character &amp; background unlocked</div>
-      <div class="g2 cod">
-        <button id="pl">▶ PLAY</button>
-        <button id="ml">🗺 LEVELS</button>
-        <button id="mc">🧑 CHARACTERS</button>
-        <button id="mb">🖼 BACKGROUNDS</button>
-        <button id="mp">⚙ PROFILE &amp; SETTINGS</button>
+      <div class="hd" style="justify-content:flex-end"><span id="cn"></span></div>
+      <div class="hub">
+        <button class="sq2" id="mt">TUTORIAL</button><button id="pl">▶ PLAY</button><button id="ml">🗺 LEVELS</button>
+        <button id="mc">🧑 CHARS</button>
+        <div class="center"><img id="hav" class="avatar" alt=""><b id="hn"></b><span id="hbio" class="hint"></span></div>
+        <button id="mg">🔫 GUNS</button>
+        <button id="mb">🖼 BACKGROUNDS</button><button class="sq2" id="rs">RESTART LEVEL</button><button id="mp">⚙ PROFILE</button>
       </div>
-      <div class="row2"><button class="sq2" id="mt">TUTORIAL</button><button class="sq2" id="rs">RESTART LEVEL FROM START</button></div>
+      <div class="badge" id="hb">HOST MODE · every level, character, background &amp; gun unlocked</div>
       <div class="sub"><h3>// COMPETE VS FRIEND</h3><p class="hint">Enter an online friend's runner name to race them live</p>
         <div class="row2"><input id="fn" maxlength="12" placeholder="FRIEND'S NAME"><button class="sq2" id="fc">FIND &amp; RACE</button></div>
         <p class="hint" id="fe"></p></div>
@@ -124,6 +128,7 @@ footer{margin-top:18px;text-align:center;font-size:11px;letter-spacing:.14em;col
     <section id="sl"><h3>LEVELS</h3><p class="hint">Tap a cleared level to replay it</p><div id="lg"></div><button class="sq2" data-back>BACK</button></section>
     <section id="sc"></section>
     <section id="sb"></section>
+    <section id="sg"></section>
   </div>
 
   <div class="panel">
@@ -132,10 +137,11 @@ footer{margin-top:18px;text-align:center;font-size:11px;letter-spacing:.14em;col
     <ul id="lb"></ul>
   </div>
   <div class="panel ctl">
-    <div><b>KEYBOARD</b><br>Move: A D / ← →<br>Jump: W / ↑ / Space · Duck: S / ↓</div>
+    <div><b>KEYBOARD</b><br>Move: A D / ← →<br>Jump: W / ↑ / Space · Duck: S / ↓<br>Fire: F</div>
     <div><b>PHONE</b><br>Joystick: left / right to move,<br>up to jump, down to duck<br>Or use the JUMP / DUCK buttons</div>
-    <div><b>CONTROLLER</b><br>Left stick / D-pad to move<br>A to jump · B to duck</div>
+    <div><b>CONTROLLER</b><br>Left stick / D-pad to move<br>RB to jump · LB to duck · X/RT to fire</div>
     <div><b>COINS</b><br>Grab coins on the course. They are<br>banked at checkpoints and the exit.</div>
+    <div><b>MONSTERS</b><br>Shoot them with your equipped gun<br>before they reach you — tougher on later levels.</div>
   </div>
   <footer>Producer: Darsh Gaming Private Limited</footer>
 </div>
@@ -173,16 +179,26 @@ const BG=[['SYNTHWAVE','#0b0221','#3a0b52','#ff2a6d','#ffe600','#ff2a6d','#1a063
 ['MIDNIGHT','#00030f','#0a1440','#2a4aff','#a0b0ff','#4a6aff','#060e30','#030820','#4a6aff','#00f0ff'],
 ['CHERRY','#12000a','#4a0a2a','#ff2a7a','#ffb0d0','#ff2a7a','#2a0618','#1a030e','#ff2a7a','#ffd0e4']]
  .map((a,i)=>({n:a[0],p:i?150+(i-1)*100:0,s:[a[1],a[2],a[3]],u:[a[4],a[5]],f:a[6],m:a[7],l:a[8],g:a[9]}));
+const GN=[['PISTOL',3,600],['SMG',2,220],['SHOTGUN',6,900],['RIFLE',4,350],['SNIPER',10,1400],
+ ['REVOLVER',5,700],['UZI',2,150],['CROSSBOW',7,1100],['PLASMA',8,500],['LASER',6,300],
+ ['MINIGUN',3,90],['RAILGUN',14,1600],['BURST RIFLE',5,260],['DOUBLE BARREL',9,1000],['NEEDLER',2,180],
+ ['CANNON',16,1800],['STUN GUN',1,500],['ARC BLASTER',7,400],['ROCKET LAUNCHER',20,1500],['OVERCHARGE',12,220]]
+ .map((a,i)=>({n:a[0],dmg:a[1],rate:a[2],p:i?200+(i-1)*120:0}));
 
 /* ---------- state ---------- */
-let W=800,state='menu',obs=[],CO=[],nextX=0,rng=null,fr=0,endT=0,overAt=-99,room=null,dirty=true,cam=0,p=null,BJ=0,BD=0,lv=0,END=0,pick=0,TH=BG[0];
+let W=800,state='menu',obs=[],CO=[],BUL=[],nextX=0,rng=null,fr=0,endT=0,overAt=-99,room=null,dirty=true,cam=0,p=null,BJ=0,BD=0,BF=0,lv=0,END=0,pick=0,TH=BG[0];
+// Set this to a secret name (lowercase) to enable a local "host/admin" test
+// mode (all content unlocked, infinite coins) when that name is entered.
+// Leave it blank ('') to disable the feature entirely for a public release.
+const ADMIN_NAME='';
+const isAdminName=v=>!!ADMIN_NAME&&v.toLowerCase()===ADMIN_NAME;
 let name=(ls('nr_name')||'').replace(/[^\w \-]/g,'').trim().slice(0,12);
-let host=name.toLowerCase()==='xxxx';
+let host=isAdminName(name);
 let tutDone=!!ls('nr_tut'),cleared=RI('nr_cl',0,200),bal=RI('nr_coins',0,1e9);
 const setOf=k=>{const s=new Set([0]);(ls(k)||'').split(',').forEach(x=>{const n=parseInt(x,10);if(n>0&&n<20)s.add(n)});return s};
-const own={c:setOf('nr_oc'),b:setOf('nr_ob')},eq={c:RI('nr_ec',0,19),b:RI('nr_eb',0,19)},view={c:0,b:0};
+const own={c:setOf('nr_oc'),b:setOf('nr_ob'),g:setOf('nr_og')},eq={c:RI('nr_ec',0,19),b:RI('nr_eb',0,19),g:RI('nr_eg',0,19)},view={c:0,b:0,g:0};
 const owns=(k,i)=>host||own[k].has(i);
-function fixEq(){for(const k of ['c','b'])if(!owns(k,eq[k]))eq[k]=0;ls('nr_ec',eq.c);ls('nr_eb',eq.b);view.c=eq.c;view.b=eq.b}
+function fixEq(){for(const k of ['c','b','g'])if(!owns(k,eq[k]))eq[k]=0;ls('nr_ec',eq.c);ls('nr_eb',eq.b);ls('nr_eg',eq.g);view.c=eq.c;view.b=eq.b;view.g=eq.g}
 fixEq();
 let col=HEX.test(ls('nr_c1')||'')?ls('nr_c1'):'#00f0ff';
 $('c1').value=col;$('c1').oninput=e=>{col=e.target.value;ls('nr_c1',col);P({c:col});renderAv()};
@@ -202,10 +218,11 @@ let AC;function beep(f,d,ty){try{AC=AC||new(window.AudioContext||window.webkitAu
 function mk(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 const dx=o=>o.x+Math.sin(fr/40+o.x)*45;
 const TUT=[{t:2,x:700,w:90,h:0,by:0},{t:1,x:1250,w:44,h:22,by:26},{t:0,x:1750,n:2,w:28,h:30,by:0},{t:2,x:2150,w:110,h:0,by:0}];
-function gen(upto){if(!lv)return;const n=lv,pp=.2+n*.001,dp=n>5?Math.min((n-5)*.0018,.35):0,G=Math.max(190,280-n*.4);
+function gen(upto){if(!lv)return;const n=lv,pp=.2+n*.001,dp=n>5?Math.min((n-5)*.0018,.35):0,mp=n>10?Math.min((n-10)*.0009,.18):0,G=Math.max(190,280-n*.4),hpMax=1+Math.floor(n/18);
   while(nextX<upto&&nextX<END-300){const r=rng(),d=nextX;let o;
     if(r<pp)o={t:2,x:d,w:Math.round(70+rng()*(20+n*.3)),h:0,by:0};
     else if(r<pp+dp)o={t:1,x:d,w:44,h:22,by:rng()<.5?26:32};
+    else if(r<pp+dp+mp)o={t:3,x:d,w:34,h:40,by:0,hp:hpMax,maxHp:hpMax};
     else{const k=1+(rng()*(n>30?3:2)|0);o={t:0,x:d,n:k,w:k*14,h:26+(rng()*20|0),by:0}}
     const c=[Math.floor(d/CP)*CP,Math.ceil(d/CP)*CP].find(c=>c>0&&c>d-160&&c<d+o.w+160);
     if(c){nextX=c+160;continue}
@@ -220,7 +237,7 @@ function start(){
   if(!host){if(!tutDone)pick=0;else if(pick>cleared+1)pick=cleared+1}
   sizeCv();lv=pick;END=lv?ENDL:2700;let sp=lv?cpGet(lv):0;if(sp>=END-500||sp%CP)sp=0;const x0=sp||PX0;
   rng=mk(lv*7919+13);obs=lv?[]:TUT.map(o=>({...o}));CO=[];nextX=520;cam=Math.max(0,x0-PX0);BJ=BD=0;
-  p={px:x0,vx:0,y:0,vy:0,g:6,duck:0,dead:0,won:0,best:x0,cp:sp,flash:0,cl:[],face:1,ax:0,j:0,d:0};
+  p={px:x0,vx:0,y:0,vy:0,g:6,duck:0,dead:0,won:0,best:x0,cp:sp,flash:0,cl:[],face:1,ax:0,j:0,d:0,f:0,gd:GN[eq.g].dmg,gc:GN[eq.g].rate,gt:0};BUL=[];
   if(lv){gen(x0+W*2);trim()}
   state='run';endT=0;menuOn(false);$('ov').style.display='none';$('hm').style.display='block';document.body.classList.add('play');
   if(document.activeElement)document.activeElement.blur();
@@ -242,6 +259,10 @@ function stepP(){if(p.dead||p.won)return;
   cam=Math.max(cam,p.px-W*.4);gen(p.px+W*2);
   if(p.j&&p.g>0){p.vy=12.5;p.g=0;beep(520,.06)}
   p.duck=p.d&&p.y===0?1:0;
+  if(p.f&&fr>=p.gt){p.gt=fr+Math.max(4,Math.round(p.gc/16.67));BUL.push({x:p.px+30,y:p.duck?11:26});beep(300+p.gd*15,.04,'sine')}
+  for(let i=BUL.length-1;i>=0;i--){const b=BUL[i];b.x+=14;if(b.x>p.px+700){BUL.splice(i,1);continue}
+    for(const o of obs){if(o.t!==3||o.hp<=0)continue;if(b.x>o.x-4&&b.x<o.x+o.w+4&&b.y>o.by-6&&b.y<o.by+o.h+6){
+      o.hp-=p.gd;BUL.splice(i,1);if(o.hp<=0){pay(host?0:3+Math.floor(lv/20));beep(150,.15,'sawtooth')}else beep(220,.03);break}}}
   const x0=p.px+9,x1=p.px+27;let pit=false;
   for(const o of obs){if(o.x>x1)break;if(o.t===2&&o.x<=x0&&x1<=o.x+o.w){pit=true;break}}
   p.vy-=(p.d&&p.y>0)?1.6:.7;p.y+=p.vy;
@@ -252,6 +273,7 @@ function stepP(){if(p.dead||p.won)return;
     if(q.x>x0-8&&q.x<x1+8&&q.y+8>y0-2&&q.y-8<y1+4){q.g=1;p.cl.push(q.x);beep(1300,.04)}}
   for(const o of obs){if(o.x>x1+50)break;if(o.t===2||o.x+o.w+50<x0)continue;let hit=false;
     if(o.t===1){const ox=dx(o);hit=x1>ox+4&&x0<ox+o.w-4&&y1>o.by+2&&y0<o.by+o.h-4}
+    else if(o.t===3){if(o.hp>0)hit=x1>o.x+4&&x0<o.x+o.w-4&&y1>o.by+2&&y0<o.by+o.h-4}
     else for(let i=0;i<o.n&&!hit;i++){const a=o.x+i*14,lo=Math.max(x0,a),hi2=Math.min(x1,a+14);if(lo>=hi2)continue;
       const q=Math.min(Math.max(a+7,lo),hi2);hit=y0<o.h*(1-Math.abs(q-a-7)/7)*.9}
     if(hit){die();break}}}
@@ -266,30 +288,34 @@ function fin(w){state='over';overAt=fr;P({k:1,d:0});let t,m,b;
 
 /* ---------- menus ---------- */
 function go(id){view.c=eq.c;view.b=eq.b;for(const s of $('menu').children)s.classList.toggle('on',s.id===id);
-  if(id==='sh')homeUI();if(id==='sl')lvUI();if(id==='sc')shop('c');if(id==='sb')shop('b');if(id==='sp')profileUI()}
+  if(id==='sh')homeUI();if(id==='sl')lvUI();if(id==='sc')shop('c');if(id==='sb')shop('b');if(id==='sg')shop('g');if(id==='sp')profileUI()}
 function homeUI(){if(!host&&!tutDone)pick=0;$('hn').textContent=name;$('hbio').textContent=bio;renderAv();$('cn').textContent=host?'∞ COINS':'COINS '+bal;$('hb').style.display=host?'inline-block':'none';
   $('pl').textContent=pick===0?'PLAY TUTORIAL':'PLAY LEVEL '+pick;$('rs').style.display=(pick>0&&cpGet(pick))?'inline-block':'none'}
 function profileUI(){$('pav').src=avSrc();$('bio').value=bio;$('nm2').value=name;$('pe').textContent=''}
 function lvUI(){const g=$('lg');g.replaceChildren();for(let n=1;n<=200;n++){const b=document.createElement('button'),ok=host||(tutDone&&n<=cleared+1);
   b.textContent=n+(n<=cleared?' ✓':'');b.className='lv'+(n<=cleared?' done':'');b.disabled=!ok;b.dataset.n=n;g.append(b)}}
-function shop(k){const D=k==='c'?CH:BG,i=view[k],d=D[i],sec=$(k==='c'?'sc':'sb'),o=owns(k,i);bal=RI('nr_coins',0,1e9);
+function CAT(k){return k==='c'?CH:k==='b'?BG:GN}
+function SEC(k){return k==='c'?'sc':k==='b'?'sb':'sg'}
+function TTL(k){return k==='c'?'CHARACTERS':k==='b'?'BACKGROUNDS':'GUNS'}
+function shop(k){const D=CAT(k),i=view[k],d=D[i],sec=$(SEC(k)),o=owns(k,i);bal=RI('nr_coins',0,1e9);
   let lab,dis=false;if(eq[k]===i){lab='EQUIPPED';dis=true}else if(o)lab='EQUIP';else if(bal>=d.p)lab='BUY · '+d.p+' COINS';else{lab='NEED '+(d.p-bal)+' MORE COINS';dis=true}
-  sec.innerHTML='<h3>'+(k==='c'?'CHARACTERS':'BACKGROUNDS')+'</h3><div class="hd"><span>'+d.n+'</span><span id="cn">'+(host?'∞ COINS':'COINS '+bal)+'</span></div><div class="cg">'+
+  const stat=k==='g'?' · DMG '+d.dmg+' · '+(1000/d.rate).toFixed(1)+' shots/s':'';
+  sec.innerHTML='<h3>'+TTL(k)+'</h3><div class="hd"><span>'+d.n+stat+'</span><span id="cn">'+(host?'∞ COINS':'COINS '+bal)+'</span></div><div class="cg">'+
    D.map((x,j)=>'<button class="cd'+(j===i?' sel':'')+(owns(k,j)?' own':'')+'" data-i="'+j+'"><b>'+x.n+'</b><span>'+(eq[k]===j?'EQUIPPED':owns(k,j)?'OWNED':x.p+' COINS')+'</span></button>').join('')+
    '</div><div class="act"><button data-act '+(dis?'disabled':'')+'>'+lab+'</button><button class="sq2" data-back>BACK</button></div>'}
-function act(k){const i=view[k],d=(k==='c'?CH:BG)[i];bal=RI('nr_coins',0,1e9);
+function act(k){const i=view[k],d=CAT(k)[i];bal=RI('nr_coins',0,1e9);
   if(owns(k,i))eq[k]=i;
-  else if(d.p>0&&bal>=d.p){bal-=d.p;ls('nr_coins',bal);own[k].add(i);eq[k]=i;ls(k==='c'?'nr_oc':'nr_ob',[...own[k]].join(','))}
+  else if(d.p>0&&bal>=d.p){bal-=d.p;ls('nr_coins',bal);own[k].add(i);eq[k]=i;ls(k==='c'?'nr_oc':k==='b'?'nr_ob':'nr_og',[...own[k]].join(','))}
   else return;
-  ls(k==='c'?'nr_ec':'nr_eb',eq[k]);if(k==='c')P({ch:eq.c});shop(k)}
-$('menu').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const sec=b.closest('section'),k=sec.id==='sc'?'c':'b';
+  ls(k==='c'?'nr_ec':k==='b'?'nr_eb':'nr_eg',eq[k]);if(k==='c')P({ch:eq.c});shop(k)}
+$('menu').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const sec=b.closest('section'),k=sec.id==='sc'?'c':sec.id==='sb'?'b':sec.id==='sg'?'g':null;
   if(b.hasAttribute('data-back'))go('sh');
   else if(b.dataset.i!==undefined){view[k]=+b.dataset.i;shop(k)}
   else if(b.hasAttribute('data-act'))act(k);
   else if(sec.id==='sl'&&b.dataset.n&&!b.disabled){pick=+b.dataset.n;start()}});
-$('pl').onclick=start;$('ml').onclick=()=>go('sl');$('mc').onclick=()=>go('sc');$('mb').onclick=()=>go('sb');
+$('pl').onclick=start;$('ml').onclick=()=>go('sl');$('mc').onclick=()=>go('sc');$('mb').onclick=()=>go('sb');$('mg').onclick=()=>go('sg');
 $('mt').onclick=()=>{pick=0;start()};$('rs').onclick=()=>{cpSet(pick,0);start()};
-function setName(v){v=v.replace(/[^\w \-]/g,'').trim().slice(0,12);if(!v)return false;name=v;ls('nr_name',v);host=v.toLowerCase()==='xxxx';fixEq();P({n:name,ch:eq.c});
+function setName(v){v=v.replace(/[^\w \-]/g,'').trim().slice(0,12);if(!v)return false;name=v;ls('nr_name',v);host=isAdminName(v);fixEq();P({n:name,ch:eq.c});
   pick=host?1:tutDone?Math.min(200,cleared+1):0;return true}
 $('ok').onclick=()=>{const first=!ls('nr_name');if(!setName($('nm').value)){$('ne').textContent='Use 1–12 letters or numbers.';return}
   $('ne').textContent='';if(first&&!tutDone&&!host){pick=0;start()}else go('sh')};
@@ -332,21 +358,54 @@ const je=e=>{if(e.pointerId===jid){jid=null;js.x=js.y=0;knob.style.transform=''}
 base.addEventListener('pointerup',je);base.addEventListener('pointercancel',je);
 function hold(id,fn){const el=$(id);el.addEventListener('pointerdown',e=>{e.preventDefault();fn(1);el.classList.add('on');try{el.setPointerCapture(e.pointerId)}catch(x){}});
   const off=()=>{fn(0);el.classList.remove('on')};el.addEventListener('pointerup',off);el.addEventListener('pointercancel',off)}
-hold('bj',v=>BJ=v);hold('bd',v=>BD=v);
+hold('bj',v=>BJ=v);hold('bd',v=>BD=v);hold('bf',v=>BF=v);
 let gpBlocked=false;
 function pad(){if(gpBlocked)return null;try{const gps=navigator.getGamepads?navigator.getGamepads():[];for(const g of gps)if(g)return g;return null}catch(e){gpBlocked=true;return null}}
 function readInput(){const L=K.KeyA||K.ArrowLeft,R=K.KeyD||K.ArrowRight;let ax=(R?1:0)-(L?1:0);if(Math.abs(js.x)>.25)ax=js.x;
-  let j=!!(K.Space||K.KeyW||K.ArrowUp||BJ||js.y<-.6),d=!!(K.KeyS||K.ArrowDown||BD||js.y>.6);
+  let j=!!(K.Space||K.KeyW||K.ArrowUp||BJ||js.y<-.6),d=!!(K.KeyS||K.ArrowDown||BD||js.y>.6),f=!!(K.KeyF||BF);
   const g=pad();if(g){const gx=g.axes[0]||0;if(Math.abs(gx)>.2)ax=gx;else if(g.buttons[14]&&g.buttons[14].pressed)ax=-1;else if(g.buttons[15]&&g.buttons[15].pressed)ax=1;
-    if((g.buttons[0]&&g.buttons[0].pressed)||(g.buttons[12]&&g.buttons[12].pressed))j=true;
-    if((g.buttons[1]&&g.buttons[1].pressed)||(g.buttons[13]&&g.buttons[13].pressed))d=true}
-  p.ax=Math.max(-1,Math.min(1,ax));p.j=j;p.d=d}
+    if((g.buttons[5]&&g.buttons[5].pressed)||(g.buttons[0]&&g.buttons[0].pressed)||(g.buttons[12]&&g.buttons[12].pressed))j=true;
+    if((g.buttons[4]&&g.buttons[4].pressed)||(g.buttons[1]&&g.buttons[1].pressed)||(g.buttons[13]&&g.buttons[13].pressed))d=true;
+    if((g.buttons[2]&&g.buttons[2].pressed)||(g.buttons[7]&&g.buttons[7].pressed))f=true}
+  p.ax=Math.max(-1,Math.min(1,ax));p.j=j;p.d=d;p.f=f}
 
-/* ---------- online (room presence) ---------- */
+/* ---------- online (room presence, over a plain WebSocket) ---------- */
+// Point this at your own deployed server (see server.js + README).
+// Leave it as-is (or blank) to run fully offline — solo play still works.
+const SERVER_URL='wss://YOUR-SERVER-DOMAIN/ws';
+function makeRoom(url){
+  let ws=null,myId=null,myPresence={},peersMap=new Map(),isConnected=false;
+  let onPeersCb=null,onPeersErr=null,onConnCb=null,retry=800,closed=false;
+  function connect(){
+    if(closed)return;
+    try{ws=new WebSocket(url)}catch(e){scheduleReconnect();return}
+    ws.onopen=()=>{isConnected=true;retry=800;try{ws.send(JSON.stringify({t:'hello',p:myPresence}))}catch(e){}};
+    ws.onmessage=ev=>{let m;try{m=JSON.parse(ev.data)}catch(e){return}
+      if(m.t==='id')myId=m.id;
+      else if(m.t==='state'&&Array.isArray(m.peers)){
+        const grew=m.peers.length>peersMap.size;
+        peersMap=new Map(m.peers.map(x=>[x.id,x]));
+        if(grew)try{onConnCb&&onConnCb()}catch(e){}
+        try{onPeersCb&&onPeersCb()}catch(e){}}};
+    ws.onclose=()=>{isConnected=false;try{onPeersErr&&onPeersErr()}catch(e){}scheduleReconnect()};
+    ws.onerror=()=>{try{ws.close()}catch(e){}};
+  }
+  function scheduleReconnect(){if(closed)return;retry=Math.min(retry*1.6,8000);setTimeout(connect,retry)}
+  connect();
+  return{
+    presence(o){myPresence=Object.assign({},myPresence,o);if(ws&&ws.readyState===1){try{ws.send(JSON.stringify({t:'presence',p:o}))}catch(e){return Promise.reject(e)}}return Promise.resolve()},
+    peers(){return[...peersMap.values()].map(x=>({peer:x.id,presence:x.presence||{},isMe:x.id===myId,sameTab:x.id===myId,kind:'viewer'}))},
+    onPeers(cb,errCb){onPeersCb=cb;onPeersErr=errCb},
+    onConnection(cb){onConnCb=cb},
+    connected(){return isConnected},
+    close(){closed=true;try{ws&&ws.close()}catch(e){}}
+  }
+}
 function P(o){try{room&&room.presence(o).catch(()=>{})}catch(e){}}
-(async()=>{
-  try{room=typeof claude!=='undefined'?await claude.use('room'):null}catch(e){room=null}
-  if(!room){$('st').textContent='OFFLINE — solo play still works';return}
+(()=>{
+  if(!SERVER_URL||SERVER_URL.includes('YOUR-SERVER-DOMAIN')||typeof WebSocket==='undefined'){
+    $('st').textContent='OFFLINE — solo play still works';room=null;return}
+  room=makeRoom(SERVER_URL);
   P({n:name||'RUNNER',c:col,ch:eq.c,d:0,y:0,k:1,u:0,l:0,b:cleared});
   room.onPeers(()=>{dirty=true},()=>{$('st').textContent='OFFLINE — solo play still works'});
   room.onConnection(()=>{dirty=true});
@@ -403,6 +462,12 @@ function obst(o){const sx=(o.t===1?dx(o):o.x)-cam;if(sx>W+20||sx+o.w<-20)return;
 function flags(){if(!lv)return;for(let k=Math.max(1,Math.floor(cam/CP));k*CP<cam+W+40;k++){const c=k*CP;if(c>=END-500)break;const sx=c-cam;if(sx<-40)continue;const cl=p&&p.cp>=c?'#b8ff2e':'#00f0ff';
   ctx.save();ctx.shadowColor=cl;ctx.strokeStyle=cl;ctx.fillStyle=cl;ctx.shadowBlur=10;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(sx,GY);ctx.lineTo(sx,GY-70);ctx.stroke();
   ctx.beginPath();ctx.moveTo(sx,GY-70);ctx.lineTo(sx+30,GY-60);ctx.lineTo(sx,GY-50);ctx.fill();ctx.restore()}}
+function monster(o){const sx=o.x-cam;if(sx>W+20||sx+o.w<-20)return;const y=GY-o.by-o.h;ctx.save();ctx.shadowColor=ctx.strokeStyle='#ff2a6d';ctx.fillStyle='#1a0410';ctx.lineWidth=2;ctx.shadowBlur=12;
+  ctx.beginPath();ctx.ellipse(sx+o.w/2,y+o.h/2+4,o.w/2,o.h/2,0,0,7);ctx.fill();ctx.stroke();
+  ctx.fillStyle='#00f0ff';ctx.beginPath();ctx.arc(sx+o.w*.35,y+o.h*.4,3,0,7);ctx.arc(sx+o.w*.65,y+o.h*.4,3,0,7);ctx.fill();
+  ctx.shadowBlur=0;ctx.fillStyle='#2a0000';ctx.fillRect(sx,y-8,o.w,4);ctx.fillStyle='#ff2a6d';ctx.fillRect(sx,y-8,o.w*Math.max(0,o.hp/o.maxHp),4);ctx.restore()}
+function bullets(){ctx.save();ctx.shadowColor='#ffe600';ctx.shadowBlur=8;ctx.strokeStyle='#ffe600';ctx.lineWidth=3;ctx.beginPath();
+  for(const b of BUL){const sx=b.x-cam;if(sx<-20||sx>W+20)continue;const by=GY-b.y;ctx.moveTo(sx-10,by);ctx.lineTo(sx,by)}ctx.stroke();ctx.restore()}
 function gate(){const sx=END-cam;if(!END||sx>W+60||sx<-80)return;ctx.save();ctx.shadowColor=ctx.strokeStyle='#b8ff2e';ctx.shadowBlur=14;ctx.lineWidth=3;
   const g=ctx.createLinearGradient(0,GY-100,0,GY);g.addColorStop(0,'#b8ff2e00');g.addColorStop(1,'#b8ff2e66');ctx.fillStyle=g;ctx.fillRect(sx,GY-100,44,100);
   ctx.beginPath();ctx.moveTo(sx,GY);ctx.lineTo(sx,GY-100);ctx.lineTo(sx+44,GY-100);ctx.lineTo(sx+44,GY);ctx.stroke();
@@ -426,7 +491,8 @@ function scene(gh){
     ctx.save();ctx.strokeStyle='#ff2a6d';ctx.lineWidth=2;ctx.shadowColor='#ff2a6d';ctx.shadowBlur=10;ctx.beginPath();ctx.moveTo(sx,GY);ctx.lineTo(sx,LH);ctx.moveTo(sx+o.w,GY);ctx.lineTo(sx+o.w,LH);ctx.stroke();ctx.restore()}
   for(const q of CO){const sx=q.x-cam;if(sx>W+20)break;if(sx<-20||q.g)continue;const y=GY-q.y+Math.sin(fr/12+q.x)*2;
     ctx.save();ctx.shadowColor='#ffd84a';ctx.shadowBlur=10;ctx.fillStyle='#ffd84a';ctx.beginPath();ctx.arc(sx,y,7,0,7);ctx.fill();ctx.fillStyle='#8a5a00';ctx.fillRect(sx-1,y-4,2,8);ctx.restore()}
-  flags();gate();for(const o of obs)if(o.t!==2)obst(o);
+  flags();gate();for(const o of obs){if(o.t===2)continue;if(o.t===3){if(o.hp>0)monster(o)}else obst(o)}
+  bullets();
   if(state!=='menu')for(const q of gh){const gx=q.d-cam;if(gx>-50&&gx<W+10)runner(gx,q.y,q.u,q.c,.4,-1,q.n,1,q.ch)}
   if(state==='menu')runner(PX0,0,0,col,1,fr>>3,'',1,ci);
   else runner(p.px-cam,p.y,p.duck,col,p.dead?.35:1,Math.abs(p.vx)>.6?(p.px/12|0):-1,'',p.face,ci);
